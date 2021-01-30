@@ -1,6 +1,6 @@
 {
   "name": "eos_aws_cognito",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "A wrapper around amazon-cognito-identity-js",
   "main": "index.js",
   "scripts": {
@@ -22,6 +22,8 @@
   },
   "homepage": "https://github.com/nialldorgan/eos_aws_cognito#readme",
   "devDependencies": {
+    "@aws-sdk/client-cognito-identity": "^3.3.0",
+    "@aws-sdk/credential-provider-cognito-identity": "^3.3.0",
     "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
     "babel-loader": "^8.2.2",
@@ -32,6 +34,7 @@
     "webpack-cli": "^4.4.0"
   },
   "dependencies": {
+    "@aws-sdk/client-cognito-identity-provider": "^3.3.0",
     "amazon-cognito-identity-js": "^4.5.7"
   }
 }

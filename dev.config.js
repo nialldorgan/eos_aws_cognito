@@ -15,11 +15,12 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin({ cleanStaleWebpackAssets: false })
     ],
+    resolve: { fallback : {"crypto": false}},
     module: {
       rules: [
         {
           test: /\.m?js$/,
-          exclude: /(node_modules|bower_components)/,
+          exclude: /(node_modules|bower_components)/, //including the aws sdk creates an error
           use: {
             loader: 'babel-loader',
             options: {
@@ -28,6 +29,6 @@ module.exports = {
             }
           }
         },
-      ]
+      ]      
     }
 };
