@@ -1,26 +1,22 @@
 const path = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+
 
 module.exports = {
-    mode: 'development',
+    mode: "production",
     entry: './src/index.js',
     output: {
-        filename: 'index.js',
+        filename: 'eos_aws_cognito.min.js',
         path: path.resolve(__dirname, 'dist'),
         library: 'eos_aws_cognito',
-        libraryTarget: 'umd',
-        globalObject: 'this'
+        libraryTarget: 'var'
     },
+    devtool: false,
     target: ['browserslist:defaults, not ie <= 11'],
-    plugins: [
-        new CleanWebpackPlugin({ cleanStaleWebpackAssets: false })
-    ],
-    resolve: { fallback : {"crypto": false}},
     module: {
       rules: [
         {
           test: /\.m?js$/,
-          exclude: /(node_modules|bower_components)/, //including the aws sdk creates an error
+          exclude: /(node_modules|bower_components)/,
           use: {
             loader: 'babel-loader',
             options: {
@@ -28,7 +24,7 @@ module.exports = {
               plugins: ['@babel/plugin-proposal-class-properties']
             }
           }
-        },
-      ]      
+        }
+      ]
     }
 };

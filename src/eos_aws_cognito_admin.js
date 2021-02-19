@@ -74,7 +74,7 @@ class EosAwsCognitoAdmin {
         userpoolId = null, 
         UserAttributes = null,
         MessageAction = null, 
-        DesiredDeliveryMediums = 'EMAIL',          
+        DesiredDeliveryMediums = ['EMAIL'],          
         TemporaryPassword = null, 
         ValidationData = null, 
         ForceAliasCreation = null, 
@@ -92,6 +92,12 @@ class EosAwsCognitoAdmin {
             ClientMetadata: ClientMetadata
         });
     }
+
+    adminGetUser(username, userpoolId = null)
+    {
+        return this.initAdminCommand('AdminGetUserCommand', {Username:username, UserPoolId:userpoolId});     
+    }
+        
 
     adminDisableUser(username, userpoolId = null)
     {
@@ -118,7 +124,7 @@ class EosAwsCognitoAdmin {
             Enabled: false,
             PreferredMfa: false
         }
-        return this.adminSetUserMFAPreference(username, userpool, SMSMfaSettings);
+        return this.adminSetUserMFAPreference(username, userpoolId, SMSMfaSettings);
     }
 
     adminEnableSmsMfa(username, userpoolId = null)
@@ -127,7 +133,7 @@ class EosAwsCognitoAdmin {
             Enabled: true,
             PreferredMfa: true
         }
-        return this.adminSetUserMFAPreference(username, userpool, SMSMfaSettings);
+        return this.adminSetUserMFAPreference(username, userpoolId, SMSMfaSettings);
     }
 
     adminDisableSoftwareMfa(username, userpoolId = null)
@@ -136,7 +142,7 @@ class EosAwsCognitoAdmin {
             Enabled: false,
             PreferredMfa: false
         }
-        return this.adminSetUserMFAPreference(username, userpool, null, SoftwareTokenMfaSettings);
+        return this.adminSetUserMFAPreference(username, userpoolId, null, SoftwareTokenMfaSettings);
     }
 
     adminEnableSoftwareMfa(username, userpoolId = null)
@@ -145,7 +151,7 @@ class EosAwsCognitoAdmin {
             Enabled: true,
             PreferredMfa: true
         }
-        return this.adminSetUserMFAPreference(username, userpool, null, SoftwareTokenMfaSettings);
+        return this.adminSetUserMFAPreference(username, userpoolId, null, SoftwareTokenMfaSettings);
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -231,7 +237,7 @@ class EosAwsCognitoAdmin {
     {
         return this.initAdminCommand('AdminSetUserMFAPreferenceCommand', {
             Username: username, 
-            UserPoolId: userpool, 
+            UserPoolId: userpoolId, 
             SMSMfaSettings: SMSMfaSettings, 
             SoftwareTokenMfaSettings: SoftwareTokenMfaSettings});       
     }
