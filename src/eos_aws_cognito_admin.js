@@ -4,6 +4,7 @@ import {
     CognitoIdentityProviderClient,  
     ListUsersCommand,
     ListGroupsCommand,
+    GetUserCommand,
     AdminGetUserCommand,   
     AdminCreateUserCommand, 
     AdminDisableUserCommand,
@@ -20,6 +21,7 @@ import {
 const commands = {
     ListUsersCommand,
     ListGroupsCommand,
+    GetUserCommand,
     AdminGetUserCommand,
     AdminCreateUserCommand,
     AdminDisableUserCommand,
@@ -93,6 +95,11 @@ class EosAwsCognitoAdmin {
         });
     }
 
+    getUser(AccessToken, userpoolId = null)
+    {
+        return this.initAdminCommand('GetUserCommand', {AccessToken:AccessToken, UserPoolId:userpoolId});     
+    }
+
     adminGetUser(username, userpoolId = null)
     {
         return this.initAdminCommand('AdminGetUserCommand', {Username:username, UserPoolId:userpoolId});     
@@ -112,6 +119,11 @@ class EosAwsCognitoAdmin {
     adminDeleteUser(username, userpoolId = null)
     {
         return this.initAdminCommand('AdminDeleteUserCommand', {Username:username, UserPoolId:userpoolId});
+    }
+
+    adminResetUserPassword(username, userpoolId = null)
+    {
+        return this.initAdminCommand('AdminResetUserPasswordCommand', {Username:username, UserPoolId:userpoolId});
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -1,6 +1,6 @@
 {
   "name": "eos_aws_cognito",
-  "version": "1.0.17",
+  "version": "1.0.22",
   "description": "A wrapper around amazon-cognito-identity-js",
   "main": "dist/index.js",
   "module": "dist/index.js",

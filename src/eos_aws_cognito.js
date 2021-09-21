@@ -73,12 +73,28 @@ class EosAwsCognito {
 
     //call this to logout the current user
 
-    logout(){
+    logout(global = false){
         const cognitoUser = this.getCurrentUser();
         if(!cognitoUser)
             throw errors.no_user_logged_in;
-        cognitoUser.signOut();
-        return true;
+        if (global) {
+            return this.getCognitoUser()
+            .then((cogUser) => {
+                return new Promise((resolve, reject) => {
+                    cogUser.globalSignOut({
+                        onSuccess: (success) => {
+                            resolve(success);
+                        },
+                        onFailure: (error) => {
+                            reject(error);
+                        } 
+                    })
+                })
+            })                
+        } else {
+            cognitoUser.signOut();
+            return true;
+        }        
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -228,6 +244,20 @@ class EosAwsCognito {
         }); 
     }
 
+    getUserData()
+    {
+        return this.getCognitoUser()
+        .then((cognitoUser) => {  
+            return new Promise((resolve, reject) => {
+                cognitoUser.getUserData((error, userData) => {
+                    if(error)
+                        reject(error);
+                    resolve(userData);
+                });
+            });
+        }); 
+    }
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
     // delete a user
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -327,6 +357,20 @@ class EosAwsCognito {
     //you can also use the returned secret key to generate a QR code for users to set up their TOTP device
     //After calling this function you need to call verifyNewTotpCode so the user can test and verify that their device is generating the
     //necessary codes correctly before calling setMfaPreferences which will enable MFA for the user.
+
+    getUserMfaOptions()
+    {
+        return this.getCognitoUser()
+        .then((cognitoUser) => {  
+            return new Promise((resolve, reject) => {
+                cognitoUser.getMFAOptions((error, mfaOptions) => {
+                    if(error)
+                        reject(error);
+                    resolve(mfaOptions);
+                });
+            });
+        }); 
+    }
 
     requestSoftwareMfaSetup()
     {
